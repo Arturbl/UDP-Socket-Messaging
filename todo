@@ -1,0 +1,6 @@
+
+Servico de nomes: regista nickname dos usuarios mapeando os pins (8000;8010)
+		  o pin funciona tambem como porto
+
+
+registo de utilizadores: permite registar novos utilizadores 
