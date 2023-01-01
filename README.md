@@ -1,3 +1,4 @@
+# Create an exe java app:
 
 * Add the following snippet to pom.xml
 	```
@@ -19,8 +20,7 @@
 		</plugin>
 	</plugins>
 	```
-
-# Create an exe java app:
+## run the following commands
 	mvn compile
 	mvn package
 	mvn clean package
