@@ -1,6 +1,6 @@
 
 * Add the following snippet to pom.xml
-	<!-- this goes within <build> -->
+	```
 	<plugins>
 		<plugin>
 			<!-- Build an executable JAR -->
@@ -18,9 +18,9 @@
 			</configuration>
 		</plugin>
 	</plugins>
-	<!-- other properties -->
+	```
 
-*Create an exe java app:
+# Create an exe java app:
 	mvn compile
 	mvn package
 	mvn clean package
