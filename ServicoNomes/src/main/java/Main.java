@@ -51,7 +51,7 @@ public class Main {
             message = Boolean.toString(registered);
         } else if (Objects.equals(command.get(0), "get")) {
             message = UserController.getPin(info.get(0));
-            message = message == null ? "" : message; // check if message is null, bacause datagramSocket cannot send null params
+            message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
         }
         return message;
     }
