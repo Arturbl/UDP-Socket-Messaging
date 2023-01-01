@@ -87,12 +87,11 @@ public class Main extends Application {
                 getServerResponse();
             }
         });
-
         remeberPinBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 String nickname = nicknameTextField.getText();
-                userController.sendRequestToNameService("get " + nickname);
+                userController.sendRequestToNameService("getByName " + nickname);
                 getServerResponse();
             }
         });

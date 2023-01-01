@@ -21,7 +21,9 @@ public class UserHelper {
     public static String getNameByPin(String pin) {
         // if pin is registered, then return name
         if ( !UserDataHandler.isValidPin(pin) ) {
-            return UserDataHandler.getUserByPin(pin)[0];
+            try {
+                return UserDataHandler.getUserByPin(pin)[0]; // if the user inserts a pin outside the range, the app will crash without try/catch
+            } catch (Exception ignored) {}
         }
         return null;
     }

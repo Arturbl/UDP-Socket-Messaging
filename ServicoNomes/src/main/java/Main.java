@@ -59,7 +59,7 @@ public class Main {
         } else if (Objects.equals(command.get(0), "getByName")) {
             message = UserController.getPinByName(info.get(0));
             message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
-        } else if (Objects.equals(command.get(0), "getById")) {
+        } else if (Objects.equals(command.get(0), "getByPin")) {
             message = UserController.getNameByPin(info.get(0));
             message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
         }
