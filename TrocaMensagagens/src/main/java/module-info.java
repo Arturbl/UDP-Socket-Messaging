@@ -6,4 +6,5 @@ module com.trocamensagagens {
     requires org.kordamp.bootstrapfx.core;
 
     exports com.trocamensagagens.view;
+    exports com.trocamensagagens;
 }
