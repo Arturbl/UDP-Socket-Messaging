@@ -56,8 +56,11 @@ public class Main {
         if (Objects.equals(command.get(0), "set")) {
             boolean registered = UserController.registerNewUser(info.get(0), info.get(1));
             message = Boolean.toString(registered);
-        } else if (Objects.equals(command.get(0), "get")) {
-            message = UserController.getPin(info.get(0));
+        } else if (Objects.equals(command.get(0), "getByName")) {
+            message = UserController.getPinByName(info.get(0));
+            message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
+        } else if (Objects.equals(command.get(0), "getById")) {
+            message = UserController.getNameByPin(info.get(0));
             message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
         }
         return message;

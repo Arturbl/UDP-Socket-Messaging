@@ -27,6 +27,16 @@ public class UserDataHandler {
         return null;
     }
 
+    public static String[] getUserByPin(String pin) {
+        List<String[]> currentUsers = readCsvFile();
+        for ( String[] user : currentUsers ) {
+            if (Objects.equals(pin, user[1]) ) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     // check if nickname and pin is already in use and if the pin belongs to a valid interval
     public static boolean isValidPin(String pin) {
         List<String[]> currentUsers = readCsvFile();

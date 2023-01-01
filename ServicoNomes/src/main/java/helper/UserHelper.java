@@ -10,11 +10,20 @@ public class UserHelper {
         }
         return false;
     }
-    public static String getPin(String nickname) {
+    public static String getPinByName(String nickname) {
         // if user is registered, then return pin
         if ( !UserDataHandler.isValidNickname(nickname) ) {
-            return UserDataHandler.getUserByNickname(nickname)[1];
+            return UserDataHandler.getUserByNickname(nickname)[1]; // [0] -> nickname | [1] -> pin
         }
         return null;
     }
+
+    public static String getNameByPin(String pin) {
+        // if pin is registered, then return name
+        if ( !UserDataHandler.isValidPin(pin) ) {
+            return UserDataHandler.getUserByPin(pin)[0];
+        }
+        return null;
+    }
+
 }

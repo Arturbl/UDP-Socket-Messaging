@@ -11,10 +11,18 @@ public class UserController {
         return UserHelper.registerNewUser(nickname, pin);
     }
 
-    public static String getPin(String nickname) {
+    public static String getPinByName(String nickname) {
         if (nickname.isEmpty()) {
             return null;
         }
-        return UserHelper.getPin(nickname);
+        return UserHelper.getPinByName(nickname);
     }
+
+    public static String getNameByPin(String pin) {
+        if (pin.isEmpty()) {
+            return null;
+        }
+        return UserHelper.getNameByPin(pin);
+    }
+
 }
