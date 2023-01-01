@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserController extends Thread {
@@ -20,7 +22,7 @@ public class UserController extends Thread {
         try {
             socket = new DatagramSocket(USER_REGISTRATION_PORT);
             this.start();
-            listenToRequests(socket, buffer);
+            listenToRequests();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -40,7 +42,7 @@ public class UserController extends Thread {
         }
     }
 
-    public static void listenToRequests(DatagramSocket socket, byte[] buffer) throws IOException {
+    public static void listenToRequests() throws IOException {
         while(true) {
             String obj = new Scanner(System.in).nextLine();
             sendRequestToNameService(obj);

@@ -18,14 +18,14 @@ public class Main {
     public static void main(String[] args) {
         try {
             socket = new DatagramSocket(NAME_SERVER_PORT);
-            System.out.println("[+] SERVIÇO DE NOMES A OUVIR NO PORTO: " + NAME_SERVER_PORT + "...");
-            listenToRequests(socket, buffer);
+            listenToRequests(buffer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void listenToRequests(DatagramSocket socket, byte[] buffer) throws IOException {
+    public static void listenToRequests(byte[] buffer) throws IOException {
+        System.out.println("[+] SERVIÇO DE NOMES A OUVIR NO PORTO: " + NAME_SERVER_PORT + "...");
         while(true) {
             DatagramPacket receivedPacket = new DatagramPacket(buffer, buffer.length);
             socket.receive(receivedPacket);
@@ -37,18 +37,23 @@ public class Main {
     }
 
     public static void selectAction(DatagramPacket receivedPacket, List<String> command) throws IOException {
-        List<String> info = command.subList(1, command.size()); // [register, artur, 8001] -> [artur, 8001]
-        String message = "";
-        if (Objects.equals(command.get(0), "register")) {
-            boolean registered = UserController.registerNewUser(info.get(0), info.get(1));
-            message = Boolean.toString(registered);
-        } else if (Objects.equals(command.get(0), "get")) {
-            message = UserController.getPin(info.get(0));
-        }
+        String message = getMessage(command);
         InetAddress ip = InetAddress.getByName("127.0.0.1");
         DatagramPacket toSendSocket = new DatagramPacket(message.getBytes(), message.length(), ip, receivedPacket.getPort());
         socket.send(toSendSocket);
     }
 
+    private static String getMessage(List<String> command) {
+        List<String> info = command.subList(1, command.size()); // [register, artur, 8001] -> [artur, 8001]
+        String message = "";
+        if (Objects.equals(command.get(0), "set")) {
+            boolean registered = UserController.registerNewUser(info.get(0), info.get(1));
+            message = Boolean.toString(registered);
+        } else if (Objects.equals(command.get(0), "get")) {
+            message = UserController.getPin(info.get(0));
+            message = message == null ? "" : message; // check if message is null, bacause datagramSocket cannot send null params
+        }
+        return message;
+    }
 
 }
