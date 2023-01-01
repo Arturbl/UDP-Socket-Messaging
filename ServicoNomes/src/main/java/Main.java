@@ -37,14 +37,21 @@ public class Main {
     }
 
     public static void selectAction(DatagramPacket receivedPacket, List<String> command) throws IOException {
-        String message = getMessage(command);
         InetAddress ip = InetAddress.getByName("127.0.0.1");
-        DatagramPacket toSendSocket = new DatagramPacket(message.getBytes(), message.length(), ip, receivedPacket.getPort());
+        DatagramPacket toSendSocket;
+        if( command.size() > 1 ) { // prevent sending null and crashing name server
+            String message = getMessage(command);
+            toSendSocket = new DatagramPacket(message.getBytes(), message.length(), ip, receivedPacket.getPort());
+            socket.send(toSendSocket);
+            return;
+        }
+        String error = "Insert valid data.";
+        toSendSocket = new DatagramPacket(error.getBytes(), error.length(), ip, receivedPacket.getPort());
         socket.send(toSendSocket);
     }
 
-    private static String getMessage(List<String> command) {
-        List<String> info = command.subList(1, command.size()); // [register, artur, 8001] -> [artur, 8001]
+    private static String getMessage(List<String> command) throws IOException {
+        List<String> info = command.subList(1, command.size());
         String message = "";
         if (Objects.equals(command.get(0), "set")) {
             boolean registered = UserController.registerNewUser(info.get(0), info.get(1));

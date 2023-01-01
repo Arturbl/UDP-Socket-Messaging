@@ -5,4 +5,5 @@ module com.registousers {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
 
+    exports com.registousers;
 }
