@@ -54,7 +54,7 @@ public class Main {
         List<String> info = command.subList(1, command.size());
         String message = "";
         if (Objects.equals(command.get(0), "set")) {
-            boolean registered = UserController.registerNewUser(info.get(0), info.get(1));
+            boolean registered = UserController.registerNewUser(info.get(0), info.get(info.size() - 1));
             message = Boolean.toString(registered);
         } else if (Objects.equals(command.get(0), "getByName")) {
             message = UserController.getPinByName(info.get(0));

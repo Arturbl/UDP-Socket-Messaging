@@ -10,6 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import java.util.Objects;
+
 public class Chat extends Parent {
 
     private final int NAME_SERVER_PORT = 10000;
@@ -28,7 +30,9 @@ public class Chat extends Parent {
         this.currentPin = pin;
         chatController = new ChatController(pin);
         remoteNickname = new TextField();
+        remoteNickname.setPromptText("Nickname");
         remoteMessage = new TextField();
+        remoteMessage.setPromptText("Write a message");
         sendMessageBtn = new Button("Send message");
         setSendMessageButtonAction();
         mainVBox = new VBox(remoteNickname, remoteMessage, sendMessageBtn, listView);
@@ -36,12 +40,21 @@ public class Chat extends Parent {
 
     public void setSendMessageButtonAction() {
         sendMessageBtn.setOnAction(event -> {
-            String nickname = remoteNickname.getText();
+            String toSendNicknames = remoteNickname.getText();
             String message = remoteMessage.getText();
-            chatController.sendMessage(null,"getByName " + nickname, NAME_SERVER_PORT);
-            String peerPort = chatController.getPeerPort();
-            chatController.sendMessage(currentNickname, message, Integer.parseInt(peerPort));
-            updateListView(new Payload(currentNickname, currentPin, message));
+            if(!toSendNicknames.isEmpty() && !message.isEmpty()) {
+                String[] nicknames = toSendNicknames.split(" ");
+                Payload payload = null;
+                for (String nickname : nicknames) {
+                    chatController.sendMessage(null,"getByName " + nickname, NAME_SERVER_PORT);
+                    String peerPort = chatController.getPeerPort();
+                    if(!Objects.equals(peerPort, "false")) {
+                        chatController.sendMessage(currentNickname, message, Integer.parseInt(peerPort));
+                        payload = new Payload(currentNickname, currentPin, message);
+                    }
+                }
+                updateListView(payload);
+            }
         });
     }
 
