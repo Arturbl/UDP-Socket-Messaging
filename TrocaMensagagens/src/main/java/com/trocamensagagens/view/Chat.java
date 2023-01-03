@@ -10,6 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Chat extends Parent {
@@ -59,8 +61,11 @@ public class Chat extends Parent {
     }
 
     public static void updateListView(Payload payload) {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        Date date = new Date();
+        String info = formatter.format(date) + " " + payload.getNickname() + ": " + payload.getMessage();
+        Label label = new Label(info);
         Platform.runLater(() -> {
-            Label label = new Label(payload.getNickname() + ": " + payload.getMessage());
             listView.getItems().add(label);
         });
     }
