@@ -29,5 +29,5 @@
 
 # DEMO
 
-	![alt text](https://github.com/Arturbl/Projeto-Final-SDP/images/sdp_project.jpeg)
+![alt text](https://github.com/Arturbl/Projeto-Final-SDP/images/sdp_project.jpeg)
 
