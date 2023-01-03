@@ -81,7 +81,7 @@ public class Main extends Application {
         registerBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                String nickname = nicknameTextField.getText();
+                String nickname = nicknameTextField.getText().split(" ")[0]; // prevent adding username with spaces
                 String pin = pinTextField.getText();
                 userController.sendRequestToNameService("set " + nickname + " " + pin);
                 getServerResponse();
