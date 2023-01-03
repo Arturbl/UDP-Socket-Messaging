@@ -19,7 +19,7 @@ public class Main extends Application {
         Login login = new Login(stage);
 
         Scene scene = new Scene(login.getVBox(), 300, 200);
-        stage.setTitle("2048");
+        stage.setTitle("Chat");
         stage.setResizable(false);
         stage.setScene(scene);
 

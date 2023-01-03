@@ -1,5 +1,8 @@
 package com.trocamensagagens.view;
 
+import com.trocamensagagens.controller.ChatController;
+import com.trocamensagagens.model.Payload;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,32 +12,47 @@ import javafx.scene.layout.VBox;
 
 public class Chat extends Parent {
 
-    String nickname;
-    String pin;
-    private VBox root;
+    private final int NAME_SERVER_PORT = 10000;
+    private final String currentNickname;
+    private final String currentPin;
+    private final VBox mainVBox;
+    private final TextField remoteNickname;
+    private final TextField remoteMessage;
+    private final Button sendMessageBtn;
+    private static final ListView<Label> listView = new ListView<>();
 
-    public Chat(String nickname, String pin) {
-        this.nickname = nickname;
-        this.pin = pin;
+    private final ChatController chatController;
 
-        TextField textField1 = new TextField();
-        TextField textField2 = new TextField();
-        Button button = new Button("Send message");
-        ListView<Label> listView = new ListView<>();
-
-        button.setOnAction(event -> {
-            String text1 = textField1.getText();
-            String text2 = textField2.getText();
-            Label label = new Label(text1 + " " + text2);
-            listView.getItems().add(label);
-        });
-
-        root = new VBox(textField1, textField2, button, listView);
-
+    public Chat(String pin, String currentNickname) {
+        this.currentNickname = currentNickname;
+        this.currentPin = pin;
+        chatController = new ChatController(pin);
+        remoteNickname = new TextField();
+        remoteMessage = new TextField();
+        sendMessageBtn = new Button("Send message");
+        setSendMessageButtonAction();
+        mainVBox = new VBox(remoteNickname, remoteMessage, sendMessageBtn, listView);
     }
 
+    public void setSendMessageButtonAction() {
+        sendMessageBtn.setOnAction(event -> {
+            String nickname = remoteNickname.getText();
+            String message = remoteMessage.getText();
+            chatController.sendMessage(null,"getByName " + nickname, NAME_SERVER_PORT);
+            String peerPort = chatController.getPeerPort();
+            chatController.sendMessage(currentNickname, message, Integer.parseInt(peerPort));
+            updateListView(new Payload(currentNickname, currentPin, message));
+        });
+    }
 
-    public VBox getRoot() {
-        return root;
+    public static void updateListView(Payload payload) {
+        Platform.runLater(() -> {
+            Label label = new Label(payload.getNickname() + ": " + payload.getMessage());
+            listView.getItems().add(label);
+        });
+    }
+
+    public VBox getMainVBox() {
+        return mainVBox;
     }
 }

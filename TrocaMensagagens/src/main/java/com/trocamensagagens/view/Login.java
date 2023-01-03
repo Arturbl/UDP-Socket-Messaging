@@ -62,7 +62,8 @@ public class Login extends Parent {
                     System.out.println(response);
                     serverResponseLabel.setText(response);
                     if (!Objects.equals(response, "false")) {
-                        changeScene(response);
+                        String peerNickname = response;
+                        changeScene(peerNickname, pin);
                     }
                 }
             });
@@ -71,9 +72,10 @@ public class Login extends Parent {
         }
     }
 
-    public void changeScene(String nickname) {
-        Chat chat = new Chat(nickname, pinTextField.getText());
-        Scene scene = new Scene(chat.getRoot(), 300, 200);
+    public void changeScene(String nickname, String pin) {
+        Chat chat = new Chat(pinTextField.getText(), nickname);
+        Scene scene = new Scene(chat.getMainVBox(), 300, 200);
+        primaryStage.setTitle(nickname + " - " + pin);
         primaryStage.setScene(scene);
     }
 
