@@ -53,16 +53,18 @@ public class Main {
     private static String getMessage(List<String> command) throws IOException {
         List<String> info = command.subList(1, command.size());
         String message = "";
-        if (Objects.equals(command.get(0), "set")) {
-            boolean registered = UserController.registerNewUser(info.get(0), info.get(info.size() - 1));
-            message = Boolean.toString(registered);
-        } else if (Objects.equals(command.get(0), "getByName")) {
-            message = UserController.getPinByName(info.get(0));
-            message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
-        } else if (Objects.equals(command.get(0), "getByPin")) {
-            message = UserController.getNameByPin(info.get(0));
-            message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
-        }
+        try {
+            if (Objects.equals(command.get(0), "set")) {
+                boolean registered = UserController.registerNewUser(info.get(0), info.get(info.size() - 1));
+                message = Boolean.toString(registered);
+            } else if (Objects.equals(command.get(0), "getByName")) {
+                message = UserController.getPinByName(info.get(0));
+                message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
+            } else if (Objects.equals(command.get(0), "getByPin")) {
+                message = UserController.getNameByPin(info.get(0));
+                message = message == null ? "false" : message; // check if message is null, bacause datagramSocket cannot send null params
+            }
+        } catch (Exception e) {}
         return message;
     }
 
