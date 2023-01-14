@@ -65,7 +65,6 @@ public class ChatController extends Thread {
         }
     }
 
-
     public byte[] getPayload(String nickname, String message, int port) {
         byte[] data;
         Payload payload = new Payload(nickname, Integer.toString(port), message);
@@ -81,13 +80,11 @@ public class ChatController extends Thread {
         return data;
     }
 
-
     public String getPeerPort() {
         try {
             Thread.sleep(500);
         } catch (Exception ignored) {}
         return peerPort;
     }
-
 
 }
